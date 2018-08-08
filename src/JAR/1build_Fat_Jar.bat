@@ -1,0 +1,1 @@
+jar cvfm build\MyIDE.jar Manifest.txt ru

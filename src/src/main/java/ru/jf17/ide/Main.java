@@ -1,4 +1,4 @@
-package ru.jf17.jide;
+package ru.jf17.ide;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -10,77 +10,91 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-/*
- * autocomplete-2.6.1.jar
- * rsyntaxtextarea-2.6.1.jar
- * 
- */
-
-
+import java.io.*;
 
 public class Main extends JFrame{
-
- 
 
     public Main() {
 
         JPanel contentPane = new JPanel(new BorderLayout());
-        RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
+        final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
+       // textArea.setFont(Font.decode("UTF8"));
 
-       // Font font = new Font("Verdana", Font.PLAIN, 11);
-
+        // Font font = new Font("Verdana", Font.PLAIN, 11);
         JMenuBar menuBar = new JMenuBar();
 
         JMenu fileMenu = new JMenu("File");
-       // fileMenu.setFont(font);
-       
-       JMenuItem saveItem = new JMenuItem("Save");
-       
+        // fileMenu.setFont(font);
+
+        JMenuItem saveItem = new JMenuItem("Save");
 
         JMenuItem openItem = new JMenuItem("Open");
-       // newMenu.setFont(font);
+        // newMenu.setFont(font);
         fileMenu.add(openItem);
-        
-        
-       JMenuItem saveAsItem = new JMenuItem("Save as ..");
-       // newMenu.setFont(font);
-        fileMenu.add(saveAsItem);
-       
-        JMenuItem newItem = new JMenuItem("New");
-       // newMenu.setFont(font);
-        fileMenu.add(newItem);
 
+        JMenuItem saveAsItem = new JMenuItem("Save as ..");
+        // newMenu.setFont(font);
+        fileMenu.add(saveAsItem);
+
+        JMenuItem newItem = new JMenuItem("New");
+        // newMenu.setFont(font);
+        fileMenu.add(newItem);
 
         fileMenu.addSeparator();
 
         JMenuItem exitItem = new JMenuItem("Exit");
         fileMenu.add(exitItem);
-        
-        
-        
-           exitItem.addActionListener(new ActionListener() {           
+
+        exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);             
-            }           
+                System.exit(0);
+            }
         });
-        
-        
-        
-        
+
+        openItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MyCustomFilter myFilter = new MyCustomFilter();
+                JFileChooser fileopen = new JFileChooser();
+                fileopen.setFileFilter(myFilter);
+                int ret = fileopen.showDialog(null, "Открыть файл");
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    File file = fileopen.getSelectedFile();
+                    //    /*
+                    try {
+                        // What to do with the file, e.g. display it in a TextArea
+
+                        Reader reader = new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8");
+
+                       textArea.read(reader,file.getAbsolutePath());
+                    } catch (IOException ex) {
+                        System.out.println("problem accessing file"+file.getAbsolutePath());
+                    }
+
+                    //   */
+                }
+            }
+        });
 
         menuBar.add(fileMenu);
         menuBar.add(saveItem);
 
-
         contentPane.add(new RTextScrollPane(textArea));
 
-
-
+        // A CompletionProvider is what knows of all possible completions, and
+        // analyzes the contents of the text area at the caret position to
+        // determine what completion choices should be presented. Most instances
+        // of CompletionProvider (such as DefaultCompletionProvider) are designed
+        // so that they can be shared among multiple text components.
         CompletionProvider provider = createCompletionProvider();
 
+        // An AutoCompletion acts as a "middle-man" between a text component
+        // and a CompletionProvider. It manages any options associated with
+        // the auto-completion (the popup trigger key, whether to display a
+        // documentation window along with completion choices, etc.). Unlike
+        // CompletionProviders, instances of AutoCompletion cannot be shared
+        // among multiple text components.
         AutoCompletion ac = new AutoCompletion(provider);
         ac.install(textArea);
 
@@ -96,14 +110,20 @@ public class Main extends JFrame{
         setLocationRelativeTo(null);
     }
 
-
+    /**
+     * Create a simple provider that adds some Java-related completions.
+     */
     private CompletionProvider createCompletionProvider() {
 
-
+        // A DefaultCompletionProvider is the simplest concrete implementation
+        // of CompletionProvider. This provider has no understanding of
+        // language semantics. It simply checks the text entered up to the
+        // caret position for a match against known completions. This is all
+        // that is needed in the majority of cases.
         DefaultCompletionProvider provider = new DefaultCompletionProvider();
 
-  
-
+        // Add completions for all Java keywords. A BasicCompletion is just
+        // a straightforward word completion.
         // JF17 template
         provider.addCompletion(new BasicCompletion(provider, "class "));
         provider.addCompletion(new BasicCompletion(provider, "import "));
@@ -132,10 +152,6 @@ public class Main extends JFrame{
         provider.addCompletion(new ShorthandCompletion(provider, "main",
                 "public static void main(String[] args){ \n            // your code ", "public static void main(String[] args){ \n            // your code"));
 
-
-
-
-
         return provider;
 
     }
@@ -147,11 +163,10 @@ public class Main extends JFrame{
                 try {
                     String laf = UIManager.getSystemLookAndFeelClassName();
                     UIManager.setLookAndFeel(laf);
-                } catch (Exception e) { /* Never happens */ }
+                } catch (Exception e) {
+                    /* Never happens */ }
                 new Main().setVisible(true);
             }
         });
     }
-
-    
 }
