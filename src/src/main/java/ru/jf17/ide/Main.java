@@ -88,7 +88,16 @@ public class Main extends JFrame{
         openItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MyCustomFilter myFilter = new MyCustomFilter();
-                JFileChooser fileopen = new JFileChooser();
+
+                JFileChooser fileopen;
+
+                if(workFolder!=null) {
+                    File workdirFile= new File(workFolder);
+                    fileopen = new JFileChooser(workdirFile);
+                }else{
+                    fileopen = new JFileChooser();
+                }
+
                 fileopen.setFileFilter(myFilter);
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
