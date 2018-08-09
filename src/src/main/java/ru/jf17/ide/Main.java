@@ -14,7 +14,10 @@ import java.io.*;
 
 public class Main extends JFrame{
 
+   private String workFolder;
+
     public Main() {
+
 
         JPanel contentPane = new JPanel(new BorderLayout());
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
@@ -44,12 +47,41 @@ public class Main extends JFrame{
 
         fileMenu.addSeparator();
 
+        JMenuItem cmdItem = new JMenuItem("CMD");
+        fileMenu.add(cmdItem);
+
+        fileMenu.addSeparator();
+
         JMenuItem exitItem = new JMenuItem("Exit");
         fileMenu.add(exitItem);
 
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+
+        cmdItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                Process p = null;
+                try {
+
+                    if(workFolder!=null){
+
+                        File workdirFile= new File(workFolder);
+                        String []str={};
+                        p = Runtime.getRuntime().exec("cmd /c start cmd.exe",str,workdirFile);
+
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+              /*  try {
+                 p.waitFor();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }*/
             }
         });
 
@@ -61,6 +93,8 @@ public class Main extends JFrame{
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
                     File file = fileopen.getSelectedFile();
+
+                    workFolder=file.getParent();
                     //    /*
                     try {
                         // What to do with the file, e.g. display it in a TextArea
@@ -166,6 +200,8 @@ public class Main extends JFrame{
                 } catch (Exception e) {
                     /* Never happens */ }
                 new Main().setVisible(true);
+              //  new Main().setVisible(true);
+              //  new Main().setVisible(true);
             }
         });
     }
