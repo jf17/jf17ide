@@ -169,11 +169,13 @@ public class Main extends JFrame{
         // a straightforward word completion.
         // JF17 template
         provider.addCompletion(new BasicCompletion(provider, "class "));
+        provider.addCompletion(new BasicCompletion(provider, "interface "));
         provider.addCompletion(new BasicCompletion(provider, "import "));
         provider.addCompletion(new BasicCompletion(provider, "package "));
         provider.addCompletion(new BasicCompletion(provider, "public "));
         provider.addCompletion(new BasicCompletion(provider, "private "));
         provider.addCompletion(new BasicCompletion(provider, "extends "));
+        provider.addCompletion(new BasicCompletion(provider, "implements "));
         provider.addCompletion(new BasicCompletion(provider, "final "));
         provider.addCompletion(new BasicCompletion(provider, "String "));
         provider.addCompletion(new BasicCompletion(provider, "Integer "));
@@ -183,6 +185,8 @@ public class Main extends JFrame{
         provider.addCompletion(new BasicCompletion(provider, "void "));
         provider.addCompletion(new BasicCompletion(provider, "List<"));
         provider.addCompletion(new BasicCompletion(provider, "ArrayList<"));
+        provider.addCompletion(new BasicCompletion(provider, "Map<"));
+        provider.addCompletion(new BasicCompletion(provider, "HashMap<"));
         provider.addCompletion(new BasicCompletion(provider, "try{\n"));
         provider.addCompletion(new BasicCompletion(provider, "catch{\n"));
         provider.addCompletion(new BasicCompletion(provider, "new "));
