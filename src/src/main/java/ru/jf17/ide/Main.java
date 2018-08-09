@@ -187,8 +187,15 @@ public class Main extends JFrame{
         provider.addCompletion(new BasicCompletion(provider, "catch{\n"));
         provider.addCompletion(new BasicCompletion(provider, "new "));
         provider.addCompletion(new BasicCompletion(provider, "return "));
+        // Spring Anotations :
+        provider.addCompletion(new BasicCompletion(provider, "Bean "));
         provider.addCompletion(new BasicCompletion(provider, "Data "));
         provider.addCompletion(new BasicCompletion(provider, "Autowired "));
+        provider.addCompletion(new BasicCompletion(provider, "Service "));
+        provider.addCompletion(new BasicCompletion(provider, "Repository "));
+        provider.addCompletion(new BasicCompletion(provider, "Component "));
+        provider.addCompletion(new BasicCompletion(provider, "Controller "));
+        provider.addCompletion(new BasicCompletion(provider, "RestController "));
 
         provider.addCompletion(new ShorthandCompletion(provider, "print",
                 "System.out.println(", "System.out.println("));
