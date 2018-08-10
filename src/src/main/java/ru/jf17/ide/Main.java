@@ -15,8 +15,12 @@ import java.io.*;
 public class Main extends JFrame{
 
    private String workFolder;
+   private boolean isOpen;
+   private String pathOpenFile;
 
     public Main() {
+
+        isOpen = false;
 
 
         JPanel contentPane = new JPanel(new BorderLayout());
@@ -24,6 +28,8 @@ public class Main extends JFrame{
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
        // textArea.setFont(Font.decode("UTF8"));
+
+
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
         JMenuBar menuBar = new JMenuBar();
@@ -50,6 +56,9 @@ public class Main extends JFrame{
         JMenuItem cmdItem = new JMenuItem("CMD");
         fileMenu.add(cmdItem);
 
+        JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
+        fileMenu.add(openFileDirectoryItem);
+
         fileMenu.addSeparator();
 
         JMenuItem exitItem = new JMenuItem("Exit");
@@ -61,27 +70,49 @@ public class Main extends JFrame{
             }
         });
 
+
+
+        saveItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                if(isOpen) {
+                    try {
+                        textArea.write(new FileWriter(pathOpenFile));
+
+                        JOptionPane.showMessageDialog(null, "File saved !");
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "File is NOT open!");
+                }
+
+
+
+            }});
+
         cmdItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                OSValidator validator = new OSValidator();
+
+                if (isOpen && validator.isWindows()) {
+
 
                 Process p = null;
                 try {
 
-                    if(workFolder!=null){
+                    if (workFolder != null) {
 
-                        File workdirFile= new File(workFolder);
-                        String []str={};
-                        p = Runtime.getRuntime().exec("cmd /c start cmd.exe",str,workdirFile);
+                        File workdirFile = new File(workFolder);
+                        String[] str = {};
+                        p = Runtime.getRuntime().exec("cmd /c start cmd.exe", str, workdirFile);
 
                     }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-              /*  try {
-                 p.waitFor();
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }*/
+            }
             }
         });
 
@@ -107,6 +138,8 @@ public class Main extends JFrame{
                     //    /*
                     try {
                         // What to do with the file, e.g. display it in a TextArea
+                        pathOpenFile = file.getAbsolutePath();
+                        isOpen=true;
 
                         Reader reader = new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8");
 
