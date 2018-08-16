@@ -98,7 +98,6 @@ public class Main extends JFrame{
 
                 if (isOpen && validator.isWindows()) {
 
-
                 Process p = null;
                 try {
 
@@ -112,7 +111,26 @@ public class Main extends JFrame{
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-            }
+            }else if(isOpen && validator.isUnix()){
+
+                    String command= "/usr/bin/xterm";
+
+                    Process p = null;
+                    try {
+
+                        if (workFolder != null) {
+
+                            ProcessBuilder pb =  new ProcessBuilder(command);
+                            pb.directory(new File(workFolder));
+                            p = pb.start();
+
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+
+                }
             }
         });
 

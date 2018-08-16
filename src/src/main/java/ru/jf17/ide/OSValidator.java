@@ -1,5 +1,7 @@
 package ru.jf17.ide;
 
+import javax.swing.*;
+
 public class OSValidator {
 
     private static String OS = System.getProperty("os.name").toLowerCase();
@@ -9,10 +11,13 @@ public class OSValidator {
 
     public static boolean isWindows() {
 
+      //  JOptionPane.showMessageDialog(null, OS);
 
         return (OS.contains("windows"));
 
     }
+
+
 
     public static boolean isMac() {
 
