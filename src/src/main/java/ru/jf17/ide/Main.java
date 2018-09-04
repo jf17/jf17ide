@@ -37,27 +37,27 @@ public class Main extends JFrame{
         JMenu fileMenu = new JMenu("File");
         // fileMenu.setFont(font);
 
-        JMenuItem saveItem = new JMenuItem("Save");
+       // JMenuItem saveItem = new JMenuItem("Save");
 
-        JMenuItem openItem = new JMenuItem("Open");
+        JMenuItem openItem = new JMenuItem("Open new Java Window");
         // newMenu.setFont(font);
         fileMenu.add(openItem);
 
-        JMenuItem saveAsItem = new JMenuItem("Save as ..");
+      //  JMenuItem saveAsItem = new JMenuItem("Save as ..");
         // newMenu.setFont(font);
-        fileMenu.add(saveAsItem);
+      //  fileMenu.add(saveAsItem);
 
-        JMenuItem newItem = new JMenuItem("New");
+       // JMenuItem newItem = new JMenuItem("New");
         // newMenu.setFont(font);
-        fileMenu.add(newItem);
+       // fileMenu.add(newItem);
 
         fileMenu.addSeparator();
 
-        JMenuItem cmdItem = new JMenuItem("CMD");
-        fileMenu.add(cmdItem);
+      //  JMenuItem cmdItem = new JMenuItem("CMD");
+      //  fileMenu.add(cmdItem);
 
-        JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
-        fileMenu.add(openFileDirectoryItem);
+      //  JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
+      //  fileMenu.add(openFileDirectoryItem);
 
         fileMenu.addSeparator();
 
@@ -72,67 +72,8 @@ public class Main extends JFrame{
 
 
 
-        saveItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                if(isOpen) {
-                    try {
-                        textArea.write(new FileWriter(pathOpenFile));
-
-                        JOptionPane.showMessageDialog(null, "File saved !");
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "File is NOT open!");
-                }
 
 
-
-            }});
-
-        cmdItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                OSValidator validator = new OSValidator();
-
-                if (isOpen && validator.isWindows()) {
-
-                Process p = null;
-                try {
-
-                    if (workFolder != null) {
-
-                        File workdirFile = new File(workFolder);
-                        String[] str = {};
-                        p = Runtime.getRuntime().exec("cmd /c start cmd.exe", str, workdirFile);
-
-                    }
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }else if(isOpen && validator.isUnix()){
-
-                    String command= "/usr/bin/xterm";
-
-                    Process p = null;
-                    try {
-
-                        if (workFolder != null) {
-
-                            ProcessBuilder pb =  new ProcessBuilder(command);
-                            pb.directory(new File(workFolder));
-                            p = pb.start();
-
-                        }
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-
-
-                }
-            }
-        });
 
         openItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -154,17 +95,15 @@ public class Main extends JFrame{
 
                     workFolder=file.getParent();
                     //    /*
-                    try {
+
                         // What to do with the file, e.g. display it in a TextArea
                         pathOpenFile = file.getAbsolutePath();
                         isOpen=true;
 
-                        Reader reader = new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8");
+                        new JavaWindow(file);
 
-                       textArea.read(reader,file.getAbsolutePath());
-                    } catch (IOException ex) {
-                        System.out.println("problem accessing file"+file.getAbsolutePath());
-                    }
+
+
 
                     //   */
                 }
@@ -172,7 +111,7 @@ public class Main extends JFrame{
         });
 
         menuBar.add(fileMenu);
-        menuBar.add(saveItem);
+     //   menuBar.add(saveItem);
 
         contentPane.add(new RTextScrollPane(textArea));
 
@@ -215,47 +154,6 @@ public class Main extends JFrame{
         // caret position for a match against known completions. This is all
         // that is needed in the majority of cases.
         DefaultCompletionProvider provider = new DefaultCompletionProvider();
-
-        // Add completions for all Java keywords. A BasicCompletion is just
-        // a straightforward word completion.
-        // JF17 template
-        provider.addCompletion(new BasicCompletion(provider, "class "));
-        provider.addCompletion(new BasicCompletion(provider, "interface "));
-        provider.addCompletion(new BasicCompletion(provider, "import "));
-        provider.addCompletion(new BasicCompletion(provider, "package "));
-        provider.addCompletion(new BasicCompletion(provider, "public "));
-        provider.addCompletion(new BasicCompletion(provider, "private "));
-        provider.addCompletion(new BasicCompletion(provider, "extends "));
-        provider.addCompletion(new BasicCompletion(provider, "implements "));
-        provider.addCompletion(new BasicCompletion(provider, "final "));
-        provider.addCompletion(new BasicCompletion(provider, "String "));
-        provider.addCompletion(new BasicCompletion(provider, "Integer "));
-        provider.addCompletion(new BasicCompletion(provider, "boolean "));
-        provider.addCompletion(new BasicCompletion(provider, "true"));
-        provider.addCompletion(new BasicCompletion(provider, "false"));
-        provider.addCompletion(new BasicCompletion(provider, "void "));
-        provider.addCompletion(new BasicCompletion(provider, "List<"));
-        provider.addCompletion(new BasicCompletion(provider, "ArrayList<"));
-        provider.addCompletion(new BasicCompletion(provider, "Map<"));
-        provider.addCompletion(new BasicCompletion(provider, "HashMap<"));
-        provider.addCompletion(new BasicCompletion(provider, "try{\n"));
-        provider.addCompletion(new BasicCompletion(provider, "catch{\n"));
-        provider.addCompletion(new BasicCompletion(provider, "new "));
-        provider.addCompletion(new BasicCompletion(provider, "return "));
-        // Spring Anotations :
-        provider.addCompletion(new BasicCompletion(provider, "Bean "));
-        provider.addCompletion(new BasicCompletion(provider, "Data "));
-        provider.addCompletion(new BasicCompletion(provider, "Autowired "));
-        provider.addCompletion(new BasicCompletion(provider, "Service "));
-        provider.addCompletion(new BasicCompletion(provider, "Repository "));
-        provider.addCompletion(new BasicCompletion(provider, "Component "));
-        provider.addCompletion(new BasicCompletion(provider, "Controller "));
-        provider.addCompletion(new BasicCompletion(provider, "RestController "));
-
-        provider.addCompletion(new ShorthandCompletion(provider, "print",
-                "System.out.println(", "System.out.println("));
-        provider.addCompletion(new ShorthandCompletion(provider, "main",
-                "public static void main(String[] args){ \n            // your code ", "public static void main(String[] args){ \n            // your code"));
 
         return provider;
 
