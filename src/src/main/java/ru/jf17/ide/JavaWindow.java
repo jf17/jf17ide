@@ -164,7 +164,7 @@ public class JavaWindow  extends JFrame {
         setJMenuBar(menuBar);
 
         setContentPane(contentPane);
-        setTitle("JF17 IDE - " + file.getName() );
+        setTitle(file.getName() +" - JF17 IDE " );
       //  setDefaultCloseOperation();
         pack();
         setLocationRelativeTo(null);
