@@ -39,9 +39,13 @@ public class Main extends JFrame{
 
        // JMenuItem saveItem = new JMenuItem("Save");
 
-        JMenuItem openItem = new JMenuItem("Open new Java Window");
+        JMenuItem openItemJava = new JMenuItem("Open new Java Window");
         // newMenu.setFont(font);
-        fileMenu.add(openItem);
+        fileMenu.add(openItemJava);
+
+        JMenuItem openItemHTML = new JMenuItem("Open new HTML Window");
+        // newMenu.setFont(font);
+        fileMenu.add(openItemHTML);
 
       //  JMenuItem saveAsItem = new JMenuItem("Save as ..");
         // newMenu.setFont(font);
@@ -71,11 +75,44 @@ public class Main extends JFrame{
         });
 
 
+        openItemHTML.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MyCustomFilterHTML myFilter = new MyCustomFilterHTML();
+
+                JFileChooser fileopen;
+
+                if(workFolder!=null) {
+                    File workdirFile= new File(workFolder);
+                    fileopen = new JFileChooser(workdirFile);
+                }else{
+                    fileopen = new JFileChooser();
+                }
+
+                fileopen.setFileFilter(myFilter);
+                int ret = fileopen.showDialog(null, "Открыть файл");
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    File file = fileopen.getSelectedFile();
+
+                    workFolder=file.getParent();
+                    //    /*
+
+                    // What to do with the file, e.g. display it in a TextArea
+                    pathOpenFile = file.getAbsolutePath();
+                    isOpen=true;
+
+                    new HTMLWindow(file);
 
 
 
 
-        openItem.addActionListener(new ActionListener() {
+                    //   */
+                }
+            }
+        });
+
+
+
+        openItemJava.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MyCustomFilter myFilter = new MyCustomFilter();
 
