@@ -187,43 +187,42 @@ public class HTMLWindow  extends JFrame {
         // Add completions for all Java keywords. A BasicCompletion is just
         // a straightforward word completion.
         // JF17 template
-        provider.addCompletion(new BasicCompletion(provider, "class "));
-        provider.addCompletion(new BasicCompletion(provider, "interface "));
-        provider.addCompletion(new BasicCompletion(provider, "import "));
-        provider.addCompletion(new BasicCompletion(provider, "package "));
-        provider.addCompletion(new BasicCompletion(provider, "public "));
-        provider.addCompletion(new BasicCompletion(provider, "private "));
-        provider.addCompletion(new BasicCompletion(provider, "extends "));
-        provider.addCompletion(new BasicCompletion(provider, "implements "));
-        provider.addCompletion(new BasicCompletion(provider, "final "));
-        provider.addCompletion(new BasicCompletion(provider, "String "));
-        provider.addCompletion(new BasicCompletion(provider, "Integer "));
-        provider.addCompletion(new BasicCompletion(provider, "boolean "));
-        provider.addCompletion(new BasicCompletion(provider, "true"));
-        provider.addCompletion(new BasicCompletion(provider, "false"));
-        provider.addCompletion(new BasicCompletion(provider, "void "));
-        provider.addCompletion(new BasicCompletion(provider, "List<"));
-        provider.addCompletion(new BasicCompletion(provider, "ArrayList<"));
-        provider.addCompletion(new BasicCompletion(provider, "Map<"));
-        provider.addCompletion(new BasicCompletion(provider, "HashMap<"));
-        provider.addCompletion(new BasicCompletion(provider, "try{\n"));
-        provider.addCompletion(new BasicCompletion(provider, "catch{\n"));
-        provider.addCompletion(new BasicCompletion(provider, "new "));
-        provider.addCompletion(new BasicCompletion(provider, "return "));
-        // Spring Anotations :
-        provider.addCompletion(new BasicCompletion(provider, "Bean "));
-        provider.addCompletion(new BasicCompletion(provider, "Data "));
-        provider.addCompletion(new BasicCompletion(provider, "Autowired "));
-        provider.addCompletion(new BasicCompletion(provider, "Service "));
-        provider.addCompletion(new BasicCompletion(provider, "Repository "));
-        provider.addCompletion(new BasicCompletion(provider, "Component "));
-        provider.addCompletion(new BasicCompletion(provider, "Controller "));
-        provider.addCompletion(new BasicCompletion(provider, "RestController "));
 
-        provider.addCompletion(new ShorthandCompletion(provider, "print",
-                "System.out.println(", "System.out.println("));
-        provider.addCompletion(new ShorthandCompletion(provider, "main",
-                "public static void main(String[] args){ \n            // your code ", "public static void main(String[] args){ \n            // your code"));
+        provider.addCompletion(new BasicCompletion(provider, "class"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "html",
+                "<!DOCTYPE html>\n" +
+                        "<html lang=\"ru\">\n" +
+                        "<head>\n" +
+                        "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" +
+                        "<!-- author: XXX -->\n" +
+                        "<title> XXX </title>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "\n" +
+                        "</body>\n" +
+                        "</html>", "<html>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "div",
+                "<div>\n\n</div>", "<div>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "header",
+                "<header>\n\n</header>", "<header>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "footer",
+                "<footer>\n\n</footer>", "<footer>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "script",
+                "<script type=\"text/javascript\">\n\n</script>", "<script>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "code",
+                "<pre><code class=\"code\">\n\n</code></pre>", "<code>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "section",
+                "<section class=\"content\"> \n\n<section>", "<section>"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "span",
+                "<span class=\"codemethod\"> xxx </span>", "<span>"));
 
         return provider;
 
