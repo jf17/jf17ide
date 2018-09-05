@@ -221,10 +221,17 @@ public class JavaWindow  extends JFrame {
         provider.addCompletion(new BasicCompletion(provider, "Controller "));
         provider.addCompletion(new BasicCompletion(provider, "RestController "));
 
+        provider.addCompletion(new ShorthandCompletion(provider, "hello",
+                "class HelloWorld {\n" +
+                        "    public static void main(String[] args){\n" +
+                        "\t\tSystem.out.println(\"Hello World!\");\n" +
+                        "    }\n" +
+                        "}\n", "Hello World!"));
+
         provider.addCompletion(new ShorthandCompletion(provider, "print",
                 "System.out.println(", "System.out.println("));
         provider.addCompletion(new ShorthandCompletion(provider, "main",
-                "public static void main(String[] args){ \n            // your code ", "public static void main(String[] args){ \n            // your code"));
+                "public static void main(String[] args){ \n            // your code ", "public static void main ..."));
 
         return provider;
 
