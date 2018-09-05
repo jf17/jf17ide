@@ -89,8 +89,8 @@ public class JavaWindow  extends JFrame {
                         if (workFolder != null) {
 
                             File workdirFile = new File(workFolder);
-                            String[] str = {};
-                            p = Runtime.getRuntime().exec("cmd /c start cmd.exe", str, workdirFile);
+                            p = Runtime.getRuntime().exec("cmd /C start /D "+workdirFile+" cmd.exe ");
+
 
                         }
                     } catch (IOException e1) {
