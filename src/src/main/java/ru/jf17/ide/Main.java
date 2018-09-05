@@ -29,7 +29,7 @@ public class Main extends JFrame{
         textArea.setCodeFoldingEnabled(true);
        // textArea.setFont(Font.decode("UTF8"));
 
-
+        textArea.setTransferHandler(new FileDropHandler());
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
         JMenuBar menuBar = new JMenuBar();
