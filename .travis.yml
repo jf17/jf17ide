@@ -7,6 +7,10 @@ jdk:
 install: mvn -f src install -DskipTests=true
 script: mvn -f src test
 
+branches:
+ only:
+ - master
+
 notifications:
   email: false
 
