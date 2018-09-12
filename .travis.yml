@@ -4,9 +4,7 @@ jdk:
   - openjdk8
   - oraclejdk8
 
-install: mvn -f src install -DskipTests=true
-script: mvn -f src test
-  
+
 branches:
  only:
  - master
