@@ -22,7 +22,7 @@ public class Main extends JFrame{
 
         isOpen = false;
 
-
+// test Travis
         JPanel contentPane = new JPanel(new BorderLayout());
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
