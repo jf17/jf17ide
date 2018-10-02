@@ -42,6 +42,7 @@ final class FileDropHandler extends TransferHandler {
 
             if(ext2.equals("java")){ new JavaWindow(file);}
             else if(ext2.equals("html")){new HTMLWindow(file);}
+            else if(ext2.equals("cpp")){new CppWindow(file);}
         }
         return true;
     }

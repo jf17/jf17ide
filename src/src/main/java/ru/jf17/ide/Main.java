@@ -22,7 +22,7 @@ public class Main extends JFrame{
 
         isOpen = false;
 
-// test Travis
+
         JPanel contentPane = new JPanel(new BorderLayout());
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -46,6 +46,10 @@ public class Main extends JFrame{
         JMenuItem openItemHTML = new JMenuItem("Open new HTML Window");
         // newMenu.setFont(font);
         fileMenu.add(openItemHTML);
+
+        JMenuItem openItemCPP = new JMenuItem("Open new C++ Window");
+        // newMenu.setFont(font);
+        fileMenu.add(openItemCPP);
 
       //  JMenuItem saveAsItem = new JMenuItem("Save as ..");
         // newMenu.setFont(font);
@@ -71,6 +75,41 @@ public class Main extends JFrame{
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+
+        openItemCPP.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MyCustomFilterCPP myFilter = new MyCustomFilterCPP();
+
+                JFileChooser fileopen;
+
+                if(workFolder!=null) {
+                    File workdirFile= new File(workFolder);
+                    fileopen = new JFileChooser(workdirFile);
+                }else{
+                    fileopen = new JFileChooser();
+                }
+
+                fileopen.setFileFilter(myFilter);
+                int ret = fileopen.showDialog(null, "Открыть файл");
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    File file = fileopen.getSelectedFile();
+
+                    workFolder=file.getParent();
+                    //    /*
+
+                    // What to do with the file, e.g. display it in a TextArea
+                    pathOpenFile = file.getAbsolutePath();
+                    isOpen=true;
+
+                    new CppWindow(file);
+
+
+
+
+                    //   */
+                }
             }
         });
 
