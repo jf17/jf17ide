@@ -7,10 +7,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
 
 public class JavaWindow  extends JFrame {
@@ -40,10 +37,13 @@ public class JavaWindow  extends JFrame {
 
 
 
+
         // Font font = new Font("Verdana", Font.PLAIN, 11);
         JMenuBar menuBar = new JMenuBar();
 
         JMenu fileMenu = new JMenu("File");
+        // fileMenu.setFont(font);
+        JMenu fontMenu = new JMenu("Font");
         // fileMenu.setFont(font);
 
         JMenuItem saveItem = new JMenuItem("Save");
@@ -51,8 +51,11 @@ public class JavaWindow  extends JFrame {
         JMenuItem emptyItem1 = new JMenuItem("   ");
         JMenuItem emptyItem2 = new JMenuItem("   ");
 
+        JMenuItem fontNORMALItem = new JMenuItem("Default");
+        fontMenu.add(fontNORMALItem);
 
-        fileMenu.addSeparator();
+        JMenuItem fontUPItem = new JMenuItem("font size +");
+        JMenuItem fontDOWNItem = new JMenuItem("font size -");
 
         JMenuItem cmdItem = new JMenuItem("CMD");
         fileMenu.add(cmdItem);
@@ -61,8 +64,28 @@ public class JavaWindow  extends JFrame {
         fileMenu.add(openFileDirectoryItem);
 
 
+        fontNORMALItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),13));
+            }});
+        fontUPItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                int sizetepm = font123.getSize() + 1;
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),sizetepm));
 
+            }});
 
+        fontDOWNItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                int sizetepm = font123.getSize() - 1;
+                if(sizetepm< 8){sizetepm = 8;}
+
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),sizetepm));
+
+            }});
 
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -85,6 +108,8 @@ public class JavaWindow  extends JFrame {
 
         cmdItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+
 
                 OSValidator validator = new OSValidator();
 
@@ -145,7 +170,10 @@ public class JavaWindow  extends JFrame {
 
 
         menuBar.add(fileMenu);
+        menuBar.add(fontMenu);
         menuBar.add(saveItem);
+        menuBar.add(fontUPItem);
+        menuBar.add(fontDOWNItem);
         menuBar.add(emptyItem1);
         menuBar.add(emptyItem2);
 

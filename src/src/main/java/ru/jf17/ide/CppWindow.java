@@ -45,6 +45,7 @@ public class CppWindow extends JFrame {
 
         JMenu fileMenu = new JMenu("File");
         // fileMenu.setFont(font);
+        JMenu fontMenu = new JMenu("Font");
 
         JMenuItem saveItem = new JMenuItem("Save");
 
@@ -53,7 +54,11 @@ public class CppWindow extends JFrame {
         JMenuItem emptyItem2 = new JMenuItem("   ");
 
 
-        fileMenu.addSeparator();
+        JMenuItem fontNORMALItem = new JMenuItem("Default");
+        fontMenu.add(fontNORMALItem);
+
+        JMenuItem fontUPItem = new JMenuItem("font size +");
+        JMenuItem fontDOWNItem = new JMenuItem("font size -");
 
         JMenuItem cmdItem = new JMenuItem("CMD");
         fileMenu.add(cmdItem);
@@ -62,7 +67,28 @@ public class CppWindow extends JFrame {
         fileMenu.add(openFileDirectoryItem);
 
 
+        fontNORMALItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),13));
+            }});
+        fontUPItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                int sizetepm = font123.getSize() + 1;
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),sizetepm));
 
+            }});
+
+        fontDOWNItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                int sizetepm = font123.getSize() - 1;
+                if(sizetepm< 8){sizetepm = 8;}
+
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),sizetepm));
+
+            }});
 
 
         saveItem.addActionListener(new ActionListener() {
@@ -146,7 +172,10 @@ public class CppWindow extends JFrame {
 
 
         menuBar.add(fileMenu);
+        menuBar.add(fontMenu);
         menuBar.add(saveItem);
+        menuBar.add(fontUPItem);
+        menuBar.add(fontDOWNItem);
         menuBar.add(emptyItem1);
         menuBar.add(emptyItem2);
 
