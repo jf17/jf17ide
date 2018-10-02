@@ -48,6 +48,9 @@ public class JavaWindow  extends JFrame {
 
         JMenuItem saveItem = new JMenuItem("Save");
 
+        JMenuItem emptyItem1 = new JMenuItem("   ");
+        JMenuItem emptyItem2 = new JMenuItem("   ");
+
 
         fileMenu.addSeparator();
 
@@ -143,6 +146,8 @@ public class JavaWindow  extends JFrame {
 
         menuBar.add(fileMenu);
         menuBar.add(saveItem);
+        menuBar.add(emptyItem1);
+        menuBar.add(emptyItem2);
 
         contentPane.add(new RTextScrollPane(textArea));
 
