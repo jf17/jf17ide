@@ -27,6 +27,10 @@ public class Main extends JFrame{
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
+
+        textArea.setBackground(new Color(40,42,54)); // цвет фона
+        textArea.setForeground(new Color(248, 248, 242)); // цвет текста
+        textArea.setCurrentLineHighlightColor(new Color(68 ,71 ,90)); //цвет активной линии
        // textArea.setFont(Font.decode("UTF8"));
 
         textArea.setTransferHandler(new FileDropHandler());

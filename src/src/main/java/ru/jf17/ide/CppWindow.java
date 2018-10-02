@@ -34,6 +34,10 @@ public class CppWindow extends JFrame {
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
 
+        textArea.setBackground(new Color(40,42,54)); // цвет фона
+        textArea.setForeground(new Color(248, 248, 242)); // цвет текста
+        textArea.setCurrentLineHighlightColor(new Color(68 ,71 ,90)); //цвет активной линии
+
 
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
