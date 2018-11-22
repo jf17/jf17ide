@@ -45,7 +45,7 @@ public class HTMLWindow  extends JFrame {
 
         JMenu fileMenu = new JMenu("File");
         // fileMenu.setFont(font);
-        JMenu fontMenu = new JMenu("Font");
+        JMenu fontMenu = new JMenu("Размер шрифта");
 
         JMenu changeMenu = new JMenu("Изменить");
         JMenuItem insertParagraph = new JMenuItem("Параграф");
@@ -58,6 +58,24 @@ public class HTMLWindow  extends JFrame {
         changeMenu.add(insertComment);
         JMenuItem insertFontColor = new JMenuItem("<font color> строчку");
         changeMenu.add(insertFontColor);
+
+        JMenu codeMenu = new JMenu("Code");
+        JMenuItem insertComments = new JMenuItem("Закоментировать ");
+        codeMenu.add(insertComments);
+        JMenuItem insertOperator = new JMenuItem("Оператор");
+        codeMenu.add(insertOperator);
+        JMenuItem insertInteger = new JMenuItem("Число(Int)");
+        codeMenu.add(insertInteger);
+        JMenuItem insertObject = new JMenuItem("Обьект(переменая)");
+        codeMenu.add(insertObject);
+        JMenuItem insertClass = new JMenuItem("Класс");
+        codeMenu.add(insertClass);
+        JMenuItem insertMethod = new JMenuItem("Метод");
+        codeMenu.add(insertMethod);
+        JMenuItem insertString = new JMenuItem("Строка(текст)");
+        codeMenu.add(insertString);
+        JMenuItem insertConstructor = new JMenuItem("Конструктор");
+        codeMenu.add(insertConstructor);
 
 
         JMenuItem saveItem = new JMenuItem("Save");
@@ -78,6 +96,63 @@ public class HTMLWindow  extends JFrame {
         JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
         fileMenu.add(openFileDirectoryItem);
 
+        insertInteger.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codenumber\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertComments.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codecomment\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertObject.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeobject\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertString.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codetext\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertOperator.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeoperator\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertMethod.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codemethod\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+
+        insertClass.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeclass\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertConstructor.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeconstructor\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
 
         insertFontColor.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
@@ -230,6 +305,7 @@ public class HTMLWindow  extends JFrame {
         menuBar.add(fileMenu);
         menuBar.add(fontMenu);
         menuBar.add(changeMenu);
+        menuBar.add(codeMenu);
         menuBar.add(saveItem);
         menuBar.add(fontUPItem);
         menuBar.add(fontDOWNItem);
