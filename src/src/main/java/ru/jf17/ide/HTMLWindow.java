@@ -2,7 +2,9 @@ package ru.jf17.ide;
 
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.Style;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -12,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
+
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.MARKUP_TAG_NAME;
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.PREPROCESSOR;
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.RESERVED_WORD;
 
 public class HTMLWindow  extends JFrame {
 
@@ -37,6 +43,8 @@ public class HTMLWindow  extends JFrame {
         textArea.setBackground(new Color(40,42,54)); // цвет фона
         textArea.setForeground(new Color(248, 248, 242)); // цвет текста
         textArea.setCurrentLineHighlightColor(new Color(68 ,71 ,90)); //цвет активной линии
+        SyntaxScheme syntScheme =textArea.getSyntaxScheme();
+        syntScheme.setStyle(MARKUP_TAG_NAME,new Style(new Color(173,128,0)));
 
 
 
