@@ -6,7 +6,6 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
-import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +54,8 @@ public class HTMLWindow  extends JFrame {
         changeMenu.add(insertListLink);
         JMenuItem insertListString = new JMenuItem("String в списке");
         changeMenu.add(insertListString);
+        JMenuItem insertComment = new JMenuItem("Закомментировать строчку");
+        changeMenu.add(insertComment);
 
 
         JMenuItem saveItem = new JMenuItem("Save");
@@ -76,6 +77,13 @@ public class HTMLWindow  extends JFrame {
         fileMenu.add(openFileDirectoryItem);
 
 
+        insertComment.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<!-- "+ selectionStr+" -->";
+                textArea.replaceSelection(str);
+
+            }});
         insertParagraph.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
