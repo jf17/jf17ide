@@ -56,6 +56,8 @@ public class HTMLWindow  extends JFrame {
         changeMenu.add(insertListString);
         JMenuItem insertComment = new JMenuItem("Закомментировать строчку");
         changeMenu.add(insertComment);
+        JMenuItem insertFontColor = new JMenuItem("<font color> строчку");
+        changeMenu.add(insertFontColor);
 
 
         JMenuItem saveItem = new JMenuItem("Save");
@@ -77,6 +79,22 @@ public class HTMLWindow  extends JFrame {
         fileMenu.add(openFileDirectoryItem);
 
 
+        insertFontColor.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+
+                String colorResult ="green";
+                Color background = JColorChooser.showDialog(null,
+                        "JColorChooser Sample", null);
+                if (background != null) {
+                    int rgbtemp = background.getRGB();
+                    colorResult = Integer.toHexString(rgbtemp).substring(2);
+                }
+
+                String selectionStr = textArea.getSelectedText();
+                String str = "<font color=\"#"+colorResult+"\">"+ selectionStr+"</font>";
+                textArea.replaceSelection(str);
+
+            }});
         insertComment.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
