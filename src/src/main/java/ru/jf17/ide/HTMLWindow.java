@@ -6,6 +6,7 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,6 +48,15 @@ public class HTMLWindow  extends JFrame {
         // fileMenu.setFont(font);
         JMenu fontMenu = new JMenu("Font");
 
+        JMenu changeMenu = new JMenu("Изменить");
+        JMenuItem insertParagraph = new JMenuItem("Параграф");
+        changeMenu.add(insertParagraph);
+        JMenuItem insertListLink = new JMenuItem("Link в списке");
+        changeMenu.add(insertListLink);
+        JMenuItem insertListString = new JMenuItem("String в списке");
+        changeMenu.add(insertListString);
+
+
         JMenuItem saveItem = new JMenuItem("Save");
 
         JMenuItem emptyItem1 = new JMenuItem("   ");
@@ -65,6 +75,28 @@ public class HTMLWindow  extends JFrame {
         JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
         fileMenu.add(openFileDirectoryItem);
 
+
+        insertParagraph.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<p>"+ selectionStr+"</p>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertListLink.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<li><a href=\"#\">"+ selectionStr+"</a></li>";
+                textArea.replaceSelection(str);
+
+            }});
+        insertListString.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<li>"+ selectionStr+"</li>";
+                textArea.replaceSelection(str);
+
+            }});
 
         fontNORMALItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -171,6 +203,7 @@ public class HTMLWindow  extends JFrame {
 
         menuBar.add(fileMenu);
         menuBar.add(fontMenu);
+        menuBar.add(changeMenu);
         menuBar.add(saveItem);
         menuBar.add(fontUPItem);
         menuBar.add(fontDOWNItem);
