@@ -92,7 +92,8 @@ public class JavaWindow  extends JFrame {
 
                 if(isOpen) {
                     try {
-                        textArea.write(new FileWriter(pathOpenFile));
+                        textArea.write(new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8"));
+                        // textArea.write(new FileWriter(pathOpenFile));
 
                         JOptionPane.showMessageDialog(null, "File saved !");
                     } catch (IOException e1) {
