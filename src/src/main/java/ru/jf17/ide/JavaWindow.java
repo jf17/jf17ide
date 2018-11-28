@@ -163,6 +163,7 @@ public class JavaWindow  extends JFrame {
                         Reader reader = new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8");
 
                         textArea.read(reader,file.getAbsolutePath());
+                        textArea.setCaretPosition(0);
                     } catch (IOException ex) {
                         System.out.println("problem accessing file"+file.getAbsolutePath());
                     }
