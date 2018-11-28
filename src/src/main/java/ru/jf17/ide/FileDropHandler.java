@@ -4,9 +4,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 final class FileDropHandler extends TransferHandler {
@@ -44,6 +42,7 @@ final class FileDropHandler extends TransferHandler {
             else if(ext2.equals("HTML")){new HTMLWindow(file);}
             else if(ext2.equals("CPP")){new CppWindow(file);}
             else if(ext2.equals("HPP")){new CppWindow(file);}
+            else if(ext2.equals("TXT")){new TXTWindow(file);}
         }
         return true;
     }

@@ -24,9 +24,11 @@ public class Main extends JFrame{
 
 
         JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBackground(new Color(0,0,0));
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
-        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
         textArea.setCodeFoldingEnabled(true);
+
 
         textArea.setBackground(new Color(40,42,54)); // цвет фона
         textArea.setForeground(new Color(248, 248, 242)); // цвет текста
@@ -36,10 +38,14 @@ public class Main extends JFrame{
         textArea.setTransferHandler(new FileDropHandler());
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
-        JMenuBar menuBar = new JMenuBar();
+        BackgroundMenuBar menuBar = new BackgroundMenuBar();
 
         JMenu fileMenu = new JMenu("File");
+        fileMenu.setForeground(new Color(168, 168, 168));
+
+
         // fileMenu.setFont(font);
+
 
        // JMenuItem saveItem = new JMenuItem("Save");
 
@@ -193,7 +199,10 @@ public class Main extends JFrame{
         menuBar.add(fileMenu);
      //   menuBar.add(saveItem);
 
-        contentPane.add(new RTextScrollPane(textArea));
+        RTextScrollPane rtsp = new RTextScrollPane(textArea);
+
+
+        contentPane.add(rtsp);
 
         // A CompletionProvider is what knows of all possible completions, and
         // analyzes the contents of the text area at the caret position to

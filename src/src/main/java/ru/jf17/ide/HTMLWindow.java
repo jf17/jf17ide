@@ -33,6 +33,7 @@ public class HTMLWindow  extends JFrame {
 
 
         JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBackground(new Color(0,0,0));
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
         textArea.setCodeFoldingEnabled(true);
@@ -41,6 +42,7 @@ public class HTMLWindow  extends JFrame {
         textArea.setBackground(new Color(0,0,0)); // цвет фона
         textArea.setForeground(new Color(168, 168, 168)); // цвет текста
         textArea.setCurrentLineHighlightColor(new Color(10,10,10)); //цвет активной линии
+        textArea.setMarginLineColor(new Color(0,0,0));
         textArea.setCaretColor(Color.RED);
         textArea.setHighlightSecondaryLanguages(false);
         SyntaxScheme syntScheme =textArea.getSyntaxScheme();
@@ -52,11 +54,13 @@ public class HTMLWindow  extends JFrame {
 
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
-        JMenuBar menuBar = new JMenuBar();
+        BackgroundMenuBar menuBar = new BackgroundMenuBar();
 
         JMenu fileMenu = new JMenu("File");
+        fileMenu.setForeground(new Color(168, 168, 168));
         // fileMenu.setFont(font);
         JMenu fontMenu = new JMenu("Размер шрифта");
+        fontMenu.setForeground(new Color(168, 168, 168));
 
         JMenuItem fontNORMALItem = new JMenuItem("Default");
         fontMenu.add(fontNORMALItem);
@@ -65,6 +69,7 @@ public class HTMLWindow  extends JFrame {
         fontMenu.add(fontBigItem);
 
         JMenu changeMenu = new JMenu("Изменить");
+        changeMenu.setForeground(new Color(168, 168, 168));
         JMenuItem insertParagraph = new JMenuItem("Параграф");
         changeMenu.add(insertParagraph);
         JMenuItem insertListLink = new JMenuItem("Link в списке");
@@ -77,6 +82,7 @@ public class HTMLWindow  extends JFrame {
         changeMenu.add(insertFontColor);
 
         JMenu codeMenu = new JMenu("Code");
+        codeMenu.setForeground(new Color(168, 168, 168));
         JMenuItem insertComments = new JMenuItem("Закоментировать ");
         codeMenu.add(insertComments);
         JMenuItem insertOperator = new JMenuItem("Оператор");
@@ -96,6 +102,7 @@ public class HTMLWindow  extends JFrame {
 
 
         JMenuItem saveItem = new JMenuItem("Save");
+        saveItem.setForeground(new Color(168, 168, 168));
 
         JMenuItem emptyItem1 = new JMenuItem("   ");
         JMenuItem emptyItem2 = new JMenuItem("   ");
