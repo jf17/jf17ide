@@ -15,9 +15,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
 
-import static org.fife.ui.rsyntaxtextarea.TokenTypes.MARKUP_TAG_NAME;
-import static org.fife.ui.rsyntaxtextarea.TokenTypes.PREPROCESSOR;
-import static org.fife.ui.rsyntaxtextarea.TokenTypes.RESERVED_WORD;
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.*;
 
 public class HTMLWindow  extends JFrame {
 
@@ -40,11 +38,15 @@ public class HTMLWindow  extends JFrame {
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
 
-        textArea.setBackground(new Color(40,42,54)); // цвет фона
-        textArea.setForeground(new Color(248, 248, 242)); // цвет текста
-        textArea.setCurrentLineHighlightColor(new Color(68 ,71 ,90)); //цвет активной линии
+        textArea.setBackground(new Color(0,0,0)); // цвет фона
+        textArea.setForeground(new Color(168, 168, 168)); // цвет текста
+        textArea.setCurrentLineHighlightColor(new Color(48,48,48)); //цвет активной линии
+        textArea.setHighlightSecondaryLanguages(false);
         SyntaxScheme syntScheme =textArea.getSyntaxScheme();
         syntScheme.setStyle(MARKUP_TAG_NAME,new Style(new Color(173,128,0)));
+        syntScheme.setStyle(MARKUP_TAG_ATTRIBUTE_VALUE,new Style(new Color(83,22,136)));
+        syntScheme.setStyle(MARKUP_TAG_DELIMITER,new Style(new Color(48,48,48)));
+
 
 
 
@@ -54,6 +56,12 @@ public class HTMLWindow  extends JFrame {
         JMenu fileMenu = new JMenu("File");
         // fileMenu.setFont(font);
         JMenu fontMenu = new JMenu("Размер шрифта");
+
+        JMenuItem fontNORMALItem = new JMenuItem("Default");
+        fontMenu.add(fontNORMALItem);
+
+        JMenuItem fontBigItem = new JMenuItem("Big");
+        fontMenu.add(fontBigItem);
 
         JMenu changeMenu = new JMenu("Изменить");
         JMenuItem insertParagraph = new JMenuItem("Параграф");
@@ -91,9 +99,6 @@ public class HTMLWindow  extends JFrame {
         JMenuItem emptyItem1 = new JMenuItem("   ");
         JMenuItem emptyItem2 = new JMenuItem("   ");
 
-
-        JMenuItem fontNORMALItem = new JMenuItem("Default");
-        fontMenu.add(fontNORMALItem);
 
         JMenuItem fontUPItem = new JMenuItem("font size +");
         JMenuItem fontDOWNItem = new JMenuItem("font size -");
@@ -212,6 +217,13 @@ public class HTMLWindow  extends JFrame {
                 Font font123 = textArea.getFont();
                 textArea.setFont(new Font(font123.getName(), font123.getStyle(),13));
             }});
+
+        fontBigItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),21));
+            }});
+
         fontUPItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Font font123 = textArea.getFont();
