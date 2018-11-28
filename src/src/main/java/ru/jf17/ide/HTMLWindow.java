@@ -40,7 +40,8 @@ public class HTMLWindow  extends JFrame {
 
         textArea.setBackground(new Color(0,0,0)); // цвет фона
         textArea.setForeground(new Color(168, 168, 168)); // цвет текста
-        textArea.setCurrentLineHighlightColor(new Color(48,48,48)); //цвет активной линии
+        textArea.setCurrentLineHighlightColor(new Color(10,10,10)); //цвет активной линии
+        textArea.setCaretColor(Color.RED);
         textArea.setHighlightSecondaryLanguages(false);
         SyntaxScheme syntScheme =textArea.getSyntaxScheme();
         syntScheme.setStyle(MARKUP_TAG_NAME,new Style(new Color(173,128,0)));
