@@ -122,7 +122,9 @@ public class TXTWindow extends JFrame {
 
                 if(isOpen) {
                     try {
-                        textArea.write(new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8"));
+                        Writer writerr = new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8");
+                        textArea.write(writerr);
+                        writerr.close();
                         //  textArea.write(new FileWriter(pathOpenFile));
 
                         JOptionPane.showMessageDialog(null, "File saved !");
@@ -151,6 +153,7 @@ public class TXTWindow extends JFrame {
 
             textArea.read(reader,file.getAbsolutePath());
             textArea.setCaretPosition(0);
+            reader.close();
         } catch (IOException ex) {
             System.out.println("problem accessing file"+file.getAbsolutePath());
         }

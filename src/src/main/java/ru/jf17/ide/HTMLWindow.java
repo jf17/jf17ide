@@ -53,6 +53,7 @@ public class HTMLWindow  extends JFrame {
 
 
 
+
         // Font font = new Font("Verdana", Font.PLAIN, 11);
         BackgroundMenuBar menuBar = new BackgroundMenuBar();
 
@@ -109,7 +110,9 @@ public class HTMLWindow  extends JFrame {
 
 
         JMenuItem fontUPItem = new JMenuItem("font size +");
+        fontUPItem.setForeground(new Color(168, 168, 168));
         JMenuItem fontDOWNItem = new JMenuItem("font size -");
+        fontDOWNItem.setForeground(new Color(168, 168, 168));
 
         JMenuItem cmdItem = new JMenuItem("CMD");
         fileMenu.add(cmdItem);
@@ -256,7 +259,10 @@ public class HTMLWindow  extends JFrame {
 
                 if(isOpen) {
                     try {
-                        textArea.write(new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8"));
+
+                        Writer writerr = new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8");
+                        textArea.write(writerr);
+                        writerr.close();
                       //  textArea.write(new FileWriter(pathOpenFile));
 
                         JOptionPane.showMessageDialog(null, "File saved !");
@@ -271,49 +277,6 @@ public class HTMLWindow  extends JFrame {
 
             }});
 
-        cmdItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                OSValidator validator = new OSValidator();
-
-                if (isOpen && validator.isWindows()) {
-
-                    Process p = null;
-                    try {
-
-                        if (workFolder != null) {
-
-                            File workdirFile = new File(workFolder);
-                            p = Runtime.getRuntime().exec("cmd /C start /D "+workdirFile+" cmd.exe ");
-
-                        }
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }else if(isOpen && validator.isUnix()){
-
-                    String command= "/usr/bin/xterm";
-
-                    Process p = null;
-                    try {
-
-                        if (workFolder != null) {
-
-                            ProcessBuilder pb =  new ProcessBuilder(command);
-                            pb.directory(new File(workFolder));
-                            p = pb.start();
-
-                        }
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-
-
-                }
-            }
-        });
-
-
         workFolder=file.getParent();
         //    /*
         try {
@@ -325,6 +288,7 @@ public class HTMLWindow  extends JFrame {
 
             textArea.read(reader,file.getAbsolutePath());
             textArea.setCaretPosition(0);
+            reader.close();
         } catch (IOException ex) {
             System.out.println("problem accessing file"+file.getAbsolutePath());
         }
