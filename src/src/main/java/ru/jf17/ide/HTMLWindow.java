@@ -69,8 +69,11 @@ public class HTMLWindow  extends JFrame {
         JMenuItem fontBigItem = new JMenuItem("Big");
         fontMenu.add(fontBigItem);
 
-        JMenu changeMenu = new JMenu("Изменить");
+        JMenu changeMenu = new JMenu("HTML");
         changeMenu.setForeground(new Color(168, 168, 168));
+
+        JMenuItem insertCode = new JMenuItem("Вставить код");
+        changeMenu.add(insertCode);
         JMenuItem insertParagraph = new JMenuItem("Параграф");
         changeMenu.add(insertParagraph);
         JMenuItem insertListLink = new JMenuItem("Link в списке");
@@ -82,7 +85,7 @@ public class HTMLWindow  extends JFrame {
         JMenuItem insertFontColor = new JMenuItem("<font color> строчку");
         changeMenu.add(insertFontColor);
 
-        JMenu codeMenu = new JMenu("Code");
+        JMenu codeMenu = new JMenu("Highlight Code");
         codeMenu.setForeground(new Color(168, 168, 168));
         JMenuItem insertComments = new JMenuItem("Закоментировать ");
         codeMenu.add(insertComments);
@@ -127,6 +130,15 @@ public class HTMLWindow  extends JFrame {
                 textArea.replaceSelection(str);
 
             }});
+
+        insertCode.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<pre class=\"code\"><code>\n"+ selectionStr+"\n</code></pre>";
+                textArea.replaceSelection(str);
+
+            }});
+
         insertComments.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
