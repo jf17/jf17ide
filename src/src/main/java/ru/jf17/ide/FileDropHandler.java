@@ -43,6 +43,7 @@ final class FileDropHandler extends TransferHandler {
             else if(ext2.equals("CPP")){new CppWindow(file);}
             else if(ext2.equals("HPP")){new CppWindow(file);}
             else if(ext2.equals("TXT")){new TXTWindow(file);}
+            else if(ext2.equals("PIXI")){new PIXIWindow(file);}
         }
         return true;
     }
