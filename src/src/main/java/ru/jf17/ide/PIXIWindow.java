@@ -1,5 +1,6 @@
 package ru.jf17.ide;
 
+import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.*;
 
 public class PIXIWindow extends JFrame {
@@ -28,7 +31,7 @@ public class PIXIWindow extends JFrame {
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.setBackground(new Color(0,0,0));
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
-        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PIXI);
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
 
@@ -162,6 +165,25 @@ public class PIXIWindow extends JFrame {
 
         contentPane.add(new RTextScrollPane(textArea));
 
+                // A CompletionProvider is what knows of all possible completions, and
+        // analyzes the contents of the text area at the caret position to
+        // determine what completion choices should be presented. Most instances
+        // of CompletionProvider (such as DefaultCompletionProvider) are designed
+        // so that they can be shared among multiple text components.
+        CompletionProvider provider = createCompletionProvider();
+
+        // An AutoCompletion acts as a "middle-man" between a text component
+        // and a CompletionProvider. It manages any options associated with
+        // the auto-completion (the popup trigger key, whether to display a
+        // documentation window along with completion choices, etc.). Unlike
+        // CompletionProviders, instances of AutoCompletion cannot be shared
+        // among multiple text components.
+        AutoCompletion ac = new AutoCompletion(provider);
+        ac.install(textArea);
+
+        int mask = InputEvent.CTRL_MASK;
+        ac.setTriggerKey(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, mask));
+
 
         setJMenuBar(menuBar);
 
@@ -172,5 +194,48 @@ public class PIXIWindow extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
+    /**
+     * Create a simple provider that adds some Java-related completions.
+     */
+    private CompletionProvider createCompletionProvider() {
+
+        // A DefaultCompletionProvider is the simplest concrete implementation
+        // of CompletionProvider. This provider has no understanding of
+        // language semantics. It simply checks the text entered up to the
+        // caret position for a match against known completions. This is all
+        // that is needed in the majority of cases.
+        DefaultCompletionProvider provider = new DefaultCompletionProvider();
+
+        // Add completions for all Java keywords. A BasicCompletion is just
+        // a straightforward word completion.
+        // JF17 template
+
+        provider.addCompletion(new BasicCompletion(provider, "WINDOW_XSIZE"));
+        provider.addCompletion(new BasicCompletion(provider, "WINDOW_YSIZE"));
+        provider.addCompletion(new BasicCompletion(provider, "LANG_NAME"));
+        provider.addCompletion(new BasicCompletion(provider, "RIGHT"));
+        provider.addCompletion(new BasicCompletion(provider, "LEFT"));
+        provider.addCompletion(new BasicCompletion(provider, "TOP"));
+        provider.addCompletion(new BasicCompletion(provider, "BLACK"));
+        provider.addCompletion(new BasicCompletion(provider, "YELLOW"));
+
+
+        provider.addCompletion(new ShorthandCompletion(provider, "hello",
+                "class HelloWorld {\n" +
+                        "    public static void main(String[] args){\n" +
+                        "\t\tSystem.out.println(\"Hello World!\");\n" +
+                        "    }\n" +
+                        "}\n", "Hello World!"));
+
+        provider.addCompletion(new ShorthandCompletion(provider, "print",
+                "System.out.println(", "System.out.println("));
+        provider.addCompletion(new ShorthandCompletion(provider, "main",
+                "public static void main(String[] args){ \n            // your code ", "public static void main ..."));
+
+        return provider;
+
+    }
+
 
 }
