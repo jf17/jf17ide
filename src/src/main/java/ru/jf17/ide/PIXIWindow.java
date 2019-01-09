@@ -2,7 +2,9 @@ package ru.jf17.ide;
 
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.Style;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -12,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
+
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.*;
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.COMMENT_MULTILINE;
 
 public class PIXIWindow extends JFrame {
 
@@ -41,6 +46,17 @@ public class PIXIWindow extends JFrame {
         textArea.setMarginLineColor(new Color(0,0,0));
         textArea.setCaretColor(Color.RED);
 
+        SyntaxScheme syntScheme =textArea.getSyntaxScheme();
+
+      //  syntScheme.setStyle(RESERVED_WORD,new Style(new Color(77,210,255))); // import , static ,void,
+        syntScheme.setStyle(PREPROCESSOR,new Style(new Color(220,0,156))); // константы  ,
+        syntScheme.setStyle(FUNCTION,new Style(new Color(77,255,166))); // String , File ,
+        syntScheme.setStyle(LITERAL_STRING_DOUBLE_QUOTE,new Style(new Color(0,128,0))); // строки
+        syntScheme.setStyle(SEPARATOR,new Style(new Color(168, 168, 168))); // скобочки круглые и фигурные
+        syntScheme.setStyle(COMMENT_DOCUMENTATION,new Style(Color.darkGray)); // Documentation
+        syntScheme.setStyle(COMMENT_MARKUP,new Style(Color.darkGray)); // Documentation
+        syntScheme.setStyle(COMMENT_EOL,new Style(Color.darkGray)); // Documentation
+        syntScheme.setStyle(COMMENT_MULTILINE,new Style(Color.darkGray)); // Documentation
 
 
 
@@ -68,10 +84,14 @@ public class PIXIWindow extends JFrame {
         saveItem.setForeground(new Color(168, 168, 168));
 
         JMenuItem emptyItem1 = new JMenuItem("   ");
+        emptyItem1.setForeground(new Color(168, 168, 168));
         JMenuItem emptyItem2 = new JMenuItem("   ");
+        emptyItem2.setForeground(new Color(168, 168, 168));
 
         JMenuItem fontUPItem = new JMenuItem("font size +");
+        fontUPItem.setForeground(new Color(168, 168, 168));
         JMenuItem fontDOWNItem = new JMenuItem("font size -");
+        fontDOWNItem.setForeground(new Color(168, 168, 168));
 
 
 
