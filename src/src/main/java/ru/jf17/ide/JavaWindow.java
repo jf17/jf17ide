@@ -68,6 +68,14 @@ public class JavaWindow  extends JFrame {
         fontMenu.setForeground(new Color(168, 168, 168));
         // fileMenu.setFont(font);
 
+        JMenu changeMenu = new JMenu("Генератор кода");
+        changeMenu.setForeground(new Color(168, 168, 168));
+
+        JMenuItem ifelseCode = new JMenuItem("if / else if / else");
+        changeMenu.add(ifelseCode);
+
+
+
         JMenuItem saveItem = new JMenuItem("Save");
         saveItem.setForeground(new Color(168, 168, 168));
 
@@ -90,6 +98,14 @@ public class JavaWindow  extends JFrame {
         JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
         fileMenu.add(openFileDirectoryItem);
 
+
+        ifelseCode.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                int position = textArea.getCaretPosition();
+                String str = "if ( /* условие */ ) { /* код */ ;} \n else if( /* условие */ ){ /* код */ ;}\n else{ /* код */ ;}";
+                textArea.insert(str , position);
+
+            }});
 
         fontNORMALItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -209,6 +225,7 @@ public class JavaWindow  extends JFrame {
 
         menuBar.add(fileMenu);
         menuBar.add(fontMenu);
+        menuBar.add(changeMenu);
         menuBar.add(saveItem);
         menuBar.add(fontUPItem);
         menuBar.add(fontDOWNItem);
