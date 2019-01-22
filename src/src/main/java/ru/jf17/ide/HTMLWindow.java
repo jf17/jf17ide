@@ -74,6 +74,8 @@ public class HTMLWindow  extends JFrame {
 
         JMenuItem insertCode = new JMenuItem("Вставить код");
         changeMenu.add(insertCode);
+        JMenuItem insertImage = new JMenuItem("Вставить картинку");
+        changeMenu.add(insertImage);
         JMenuItem insertParagraph = new JMenuItem("Параграф");
         changeMenu.add(insertParagraph);
         JMenuItem insertListLink = new JMenuItem("Link в списке");
@@ -127,6 +129,14 @@ public class HTMLWindow  extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
                 String str = "<span class=\"codenumber\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+
+        insertImage.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<img src=\""+ selectionStr+"\" alt=\""+ selectionStr+"\">";
                 textArea.replaceSelection(str);
 
             }});
