@@ -45,6 +45,8 @@ final class FileDropHandler extends TransferHandler {
             else if(ext2.equals("TXT")){new TXTWindow(file);}
             else if(ext2.equals("PIXI")){new PIXIWindow(file);}
             else if(ext2.equals("GO")){new GoWindow(file);}
+            else if(ext2.equals("XML")){new XMLWindow(file);}
+            else if(ext2.equals("FTL")){new FreeMarkerWindow(file);}
         }
         return true;
     }

@@ -137,6 +137,7 @@ public class Main extends JFrame{
                     fileopen = new JFileChooser();
                 }
 
+
                 fileopen.setFileFilter(myFilter);
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
