@@ -2,16 +2,19 @@ package ru.jf17.ide;
 
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.Style;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import javax.swing.text.Document;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
+
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.*;
+import static org.fife.ui.rsyntaxtextarea.TokenTypes.COMMENT_MULTILINE;
 
 public class CppWindow extends JFrame {
 
@@ -20,6 +23,7 @@ public class CppWindow extends JFrame {
     private boolean isOpen;
     private String pathOpenFile;
     File file ;
+    private int pos = 0;
 
     public CppWindow(File pathOpenFile_IN) throws HeadlessException {
         this.file = pathOpenFile_IN;
@@ -29,36 +33,142 @@ public class CppWindow extends JFrame {
 
 
         JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBackground(new Color(0,0,0));
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
 
-        textArea.setBackground(new Color(40,42,54)); // цвет фона
-        textArea.setForeground(new Color(248, 248, 242)); // цвет текста
-        textArea.setCurrentLineHighlightColor(new Color(68 ,71 ,90)); //цвет активной линии
+        textArea.setBackground(new Color(0,0,0)); // цвет фона
+        textArea.setForeground(new Color(168, 168, 168)); // цвет текста
+        textArea.setCurrentLineHighlightColor(new Color(10,10,10)); //цвет активной линии
+        textArea.setMarginLineColor(new Color(0,0,0));
+        textArea.setCaretColor(Color.RED);
 
+        SyntaxScheme syntScheme =textArea.getSyntaxScheme();
+
+        syntScheme.setStyle(RESERVED_WORD,new Style(new Color(77,210,255))); // import , static ,void,
+        syntScheme.setStyle(FUNCTION,new Style(new Color(77,255,166))); // String , File ,
+        syntScheme.setStyle(LITERAL_STRING_DOUBLE_QUOTE,new Style(new Color(0,128,0))); // строки
+        syntScheme.setStyle(SEPARATOR,new Style(new Color(168, 168, 168))); // скобочки круглые и фигурные
+        syntScheme.setStyle(COMMENT_DOCUMENTATION,new Style(Color.darkGray)); // Documentation
+        syntScheme.setStyle(COMMENT_MARKUP,new Style(Color.darkGray)); // Documentation
+        syntScheme.setStyle(COMMENT_EOL,new Style(Color.darkGray)); // Documentation
+        syntScheme.setStyle(COMMENT_MULTILINE,new Style(Color.darkGray)); // Documentation
+
+
+        //Панель поиска
+        JPanel panel = new JPanel(); // the panel is not visible in output
+        panel.setBackground(new Color(0,0,0));
+        panel.setForeground(new Color(168, 168, 168));
+
+        JTextField findField = new JTextField(40); // accepts upto 10 characters
+        findField.setBackground(new Color(0,0,0));
+        findField.setForeground(new Color(168, 168, 168));
+
+        JButton find = new JButton("Find");
+
+        panel.add(findField);
+        panel.add(find); // Components Added using Flow Layout
+
+
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_F && e.isControlDown()){
+                    String selectionStr = textArea.getSelectedText();
+                    findField.setText(selectionStr);
+                }
+            }
+
+        });
+
+
+        find.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the text to find...convert it to lower case for eaiser comparision
+                String find = findField.getText().toLowerCase();
+                // Focus the text area, otherwise the highlighting won't show up
+                textArea.requestFocusInWindow();
+                // Make sure we have a valid search term
+                if (find != null && find.length() > 0) {
+                    Document document = textArea.getDocument();
+                    int findLength = find.length();
+                    try {
+                        boolean found = false;
+                        // Rest the search position if we're at the end of the document
+                        if (pos + findLength > document.getLength()) {
+                            pos = 0;
+                        }
+                        // While we haven't reached the end...
+                        // "<=" Correction
+                        while (pos + findLength <= document.getLength()) {
+                            // Extract the text from teh docuemnt
+                            String match = document.getText(pos, findLength).toLowerCase();
+                            // Check to see if it matches or request
+                            if (match.equals(find)) {
+                                found = true;
+                                break;
+                            }
+                            pos++;
+                        }
+
+                        // Did we find something...
+                        if (found) {
+                            // Get the rectangle of the where the text would be visible...
+                            Rectangle viewRect = textArea.modelToView(pos);
+                            // Scroll to make the rectangle visible
+                            textArea.scrollRectToVisible(viewRect);
+                            // Highlight the text
+                            textArea.setCaretPosition(pos + findLength);
+                            textArea.moveCaretPosition(pos);
+                            // Move the search position beyond the current match
+                            pos += findLength;
+                        }
+
+                    } catch (Exception exp) {
+                        exp.printStackTrace();
+                    }
+
+                }
+            }
+        });
 
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
-        JMenuBar menuBar = new JMenuBar();
+        BackgroundMenuBar menuBar = new BackgroundMenuBar();
 
         JMenu fileMenu = new JMenu("File");
+        fileMenu.setForeground(new Color(168, 168, 168));
         // fileMenu.setFont(font);
-        JMenu fontMenu = new JMenu("Font");
+        JMenu fontMenu = new JMenu("Размер шрифта");
+        fontMenu.setForeground(new Color(168, 168, 168));
+        // fileMenu.setFont(font);
+
+        JMenu changeMenu = new JMenu("Генератор кода");
+        changeMenu.setForeground(new Color(168, 168, 168));
+
+        JMenuItem ifelseCode = new JMenuItem("if / else if / else");
+        changeMenu.add(ifelseCode);
+
+
 
         JMenuItem saveItem = new JMenuItem("Save");
-
+        saveItem.setForeground(new Color(168, 168, 168));
 
         JMenuItem emptyItem1 = new JMenuItem("   ");
         JMenuItem emptyItem2 = new JMenuItem("   ");
 
-
         JMenuItem fontNORMALItem = new JMenuItem("Default");
         fontMenu.add(fontNORMALItem);
+        JMenuItem fontBigItem = new JMenuItem("Big");
+        fontMenu.add(fontBigItem);
 
         JMenuItem fontUPItem = new JMenuItem("font size +");
+        fontUPItem.setForeground(new Color(168, 168, 168));
         JMenuItem fontDOWNItem = new JMenuItem("font size -");
+        fontDOWNItem.setForeground(new Color(168, 168, 168));
 
         JMenuItem cmdItem = new JMenuItem("CMD");
         fileMenu.add(cmdItem);
@@ -66,6 +176,16 @@ public class CppWindow extends JFrame {
         JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
         fileMenu.add(openFileDirectoryItem);
 
+
+
+
+        ifelseCode.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                int position = textArea.getCaretPosition();
+                String str = "if ( /* условие */ ) { /* код */ ;} \n else if( /* условие */ ){ /* код */ ;}\n else{ /* код */ ;}";
+                textArea.insert(str , position);
+
+            }});
 
         fontNORMALItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +210,6 @@ public class CppWindow extends JFrame {
 
             }});
 
-
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -113,8 +232,16 @@ public class CppWindow extends JFrame {
 
             }});
 
+        fontBigItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Font font123 = textArea.getFont();
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(),21));
+            }});
+
         cmdItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+
 
                 OSValidator validator = new OSValidator();
 
@@ -178,13 +305,15 @@ public class CppWindow extends JFrame {
 
         menuBar.add(fileMenu);
         menuBar.add(fontMenu);
+        menuBar.add(changeMenu);
         menuBar.add(saveItem);
         menuBar.add(fontUPItem);
         menuBar.add(fontDOWNItem);
         menuBar.add(emptyItem1);
         menuBar.add(emptyItem2);
 
-        contentPane.add(new RTextScrollPane(textArea));
+        contentPane.add(BorderLayout.NORTH,panel);
+        contentPane.add(BorderLayout.CENTER,new RTextScrollPane(textArea));
 
         // A CompletionProvider is what knows of all possible completions, and
         // analyzes the contents of the text area at the caret position to
@@ -233,31 +362,48 @@ public class CppWindow extends JFrame {
         // a straightforward word completion.
         // JF17 template
         provider.addCompletion(new BasicCompletion(provider, "class "));
+        provider.addCompletion(new BasicCompletion(provider, "interface "));
+        provider.addCompletion(new BasicCompletion(provider, "import "));
+        provider.addCompletion(new BasicCompletion(provider, "package "));
+        provider.addCompletion(new BasicCompletion(provider, "public "));
+        provider.addCompletion(new BasicCompletion(provider, "private "));
+        provider.addCompletion(new BasicCompletion(provider, "extends "));
+        provider.addCompletion(new BasicCompletion(provider, "implements "));
+        provider.addCompletion(new BasicCompletion(provider, "final "));
+        provider.addCompletion(new BasicCompletion(provider, "String "));
+        provider.addCompletion(new BasicCompletion(provider, "Integer "));
+        provider.addCompletion(new BasicCompletion(provider, "boolean "));
         provider.addCompletion(new BasicCompletion(provider, "true"));
         provider.addCompletion(new BasicCompletion(provider, "false"));
         provider.addCompletion(new BasicCompletion(provider, "void "));
+        provider.addCompletion(new BasicCompletion(provider, "List<"));
+        provider.addCompletion(new BasicCompletion(provider, "Map<"));
+        provider.addCompletion(new BasicCompletion(provider, "try{\n"));
+        provider.addCompletion(new BasicCompletion(provider, "catch{\n"));
         provider.addCompletion(new BasicCompletion(provider, "new "));
-        provider.addCompletion(new BasicCompletion(provider, "include "));
         provider.addCompletion(new BasicCompletion(provider, "return "));
 
 
         provider.addCompletion(new ShorthandCompletion(provider, "hello",
-                "#include <iostream>\n" +
-                        "\n" +
-                        "int main() \n" +
-                        "{ \n" +
-                        "    std::cout << \"Hello, world!\" << std::endl;\n" +
-                        "    return 0; \n" +
+                "class HelloWorld {\n" +
+                        "    public static void main(String[] args){\n" +
+                        "\t\tSystem.out.println(\"Hello World!\");\n" +
+                        "    }\n" +
                         "}\n", "Hello World!"));
 
         provider.addCompletion(new ShorthandCompletion(provider, "print",
-                "std::cout << \"Hello, world!\" << std::endl;", "std::cout << "));
+                "System.out.println(", "System.out.println("));
         provider.addCompletion(new ShorthandCompletion(provider, "main",
-                "int main(){ \n            // your code ", "int main(){ ..."));
+                "public static void main(String[] args){ \n            // your code ", "public static void main ..."));
 
         return provider;
 
     }
+
+
+
+
+
 
 
 

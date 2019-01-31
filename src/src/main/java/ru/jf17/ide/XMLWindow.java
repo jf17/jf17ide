@@ -22,7 +22,7 @@ public class XMLWindow extends JFrame {
     private String workFolder;
     private boolean isOpen;
     private String pathOpenFile;
-    File file ;
+    File file;
 
 
     public XMLWindow(File pathOpenFile_IN) throws HeadlessException {
@@ -33,28 +33,24 @@ public class XMLWindow extends JFrame {
 
 
         JPanel contentPane = new JPanel(new BorderLayout());
-        contentPane.setBackground(new Color(0,0,0));
+        contentPane.setBackground(new Color(0, 0, 0));
         final RSyntaxTextArea textArea = new RSyntaxTextArea(40, 80);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
 
-        textArea.setBackground(new Color(0,0,0)); // цвет фона
+        textArea.setBackground(new Color(0, 0, 0)); // цвет фона
         textArea.setForeground(new Color(168, 168, 168)); // цвет текста
-        textArea.setCurrentLineHighlightColor(new Color(10,10,10)); //цвет активной линии
-        textArea.setMarginLineColor(new Color(0,0,0));
+        textArea.setCurrentLineHighlightColor(new Color(10, 10, 10)); //цвет активной линии
+        textArea.setMarginLineColor(new Color(0, 0, 0));
         textArea.setCaretColor(Color.RED);
         textArea.setHighlightSecondaryLanguages(false);
-        SyntaxScheme syntScheme =textArea.getSyntaxScheme();
-        syntScheme.setStyle(MARKUP_TAG_NAME,new Style(Color.darkGray));
-        syntScheme.setStyle(MARKUP_TAG_ATTRIBUTE_VALUE,new Style(new Color(83,22,136)));
-        syntScheme.setStyle(MARKUP_TAG_DELIMITER,new Style(new Color(48,48,48)));
+        SyntaxScheme syntScheme = textArea.getSyntaxScheme();
+        syntScheme.setStyle(MARKUP_TAG_NAME, new Style(Color.darkGray));
+        syntScheme.setStyle(MARKUP_TAG_ATTRIBUTE_VALUE, new Style(new Color(83, 22, 136)));
+        syntScheme.setStyle(MARKUP_TAG_DELIMITER, new Style(new Color(48, 48, 48)));
 
-        syntScheme.setStyle(MARKUP_COMMENT,new Style(Color.darkGray)); // комментарии
-
-
-
-
+        syntScheme.setStyle(MARKUP_COMMENT, new Style(Color.darkGray)); // комментарии
 
 
         // Font font = new Font("Verdana", Font.PLAIN, 11);
@@ -71,7 +67,6 @@ public class XMLWindow extends JFrame {
 
         JMenuItem fontBigItem = new JMenuItem("Big");
         fontMenu.add(fontBigItem);
-
 
 
         JMenuItem saveItem = new JMenuItem("Save");
@@ -93,42 +88,47 @@ public class XMLWindow extends JFrame {
         fileMenu.add(openFileDirectoryItem);
 
 
-
         fontNORMALItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Font font123 = textArea.getFont();
-                textArea.setFont(new Font(font123.getName(), font123.getStyle(),13));
-            }});
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(), 13));
+            }
+        });
 
         fontBigItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Font font123 = textArea.getFont();
-                textArea.setFont(new Font(font123.getName(), font123.getStyle(),21));
-            }});
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(), 21));
+            }
+        });
 
         fontUPItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Font font123 = textArea.getFont();
                 int sizetepm = font123.getSize() + 1;
-                textArea.setFont(new Font(font123.getName(), font123.getStyle(),sizetepm));
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(), sizetepm));
 
-            }});
+            }
+        });
 
         fontDOWNItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Font font123 = textArea.getFont();
                 int sizetepm = font123.getSize() - 1;
-                if(sizetepm< 8){sizetepm = 8;}
+                if (sizetepm < 8) {
+                    sizetepm = 8;
+                }
 
-                textArea.setFont(new Font(font123.getName(), font123.getStyle(),sizetepm));
+                textArea.setFont(new Font(font123.getName(), font123.getStyle(), sizetepm));
 
-            }});
+            }
+        });
 
 
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                if(isOpen) {
+                if (isOpen) {
                     try {
 
                         Writer writerr = new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8");
@@ -140,31 +140,29 @@ public class XMLWindow extends JFrame {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "File is NOT open!");
                 }
 
 
+            }
+        });
 
-            }});
-
-        workFolder=file.getParent();
+        workFolder = file.getParent();
         //    /*
         try {
             // What to do with the file, e.g. display it in a TextArea
             pathOpenFile = file.getAbsolutePath();
-            isOpen=true;
+            isOpen = true;
 
             Reader reader = new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8");
 
-            textArea.read(reader,file.getAbsolutePath());
+            textArea.read(reader, file.getAbsolutePath());
             textArea.setCaretPosition(0);
             reader.close();
         } catch (IOException ex) {
-            System.out.println("problem accessing file"+file.getAbsolutePath());
+            System.out.println("problem accessing file" + file.getAbsolutePath());
         }
-
-
 
 
         menuBar.add(fileMenu);
@@ -199,7 +197,7 @@ public class XMLWindow extends JFrame {
         setJMenuBar(menuBar);
 
         setContentPane(contentPane);
-        setTitle(file.getName() +" - JF17 IDE " );
+        setTitle(file.getName() + " - JF17 IDE ");
         //  setDefaultCloseOperation();
         pack();
         setLocationRelativeTo(null);

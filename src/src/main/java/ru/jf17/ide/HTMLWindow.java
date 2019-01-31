@@ -8,11 +8,9 @@ import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import javax.swing.text.Document;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
 
 import static org.fife.ui.rsyntaxtextarea.TokenTypes.*;
@@ -23,6 +21,7 @@ public class HTMLWindow  extends JFrame {
     private boolean isOpen;
     private String pathOpenFile;
     File file ;
+    private int pos = 0;
 
 
     public HTMLWindow(File pathOpenFile_IN) throws HeadlessException {
@@ -124,6 +123,86 @@ public class HTMLWindow  extends JFrame {
 
         JMenuItem openFileDirectoryItem = new JMenuItem("Open file directory");
         fileMenu.add(openFileDirectoryItem);
+
+
+        //Панель поиска
+        JPanel panel = new JPanel(); // the panel is not visible in output
+        panel.setBackground(new Color(0,0,0));
+        panel.setForeground(new Color(168, 168, 168));
+
+        JTextField findField = new JTextField(40); // accepts upto 10 characters
+        findField.setBackground(new Color(0,0,0));
+        findField.setForeground(new Color(168, 168, 168));
+
+        JButton find = new JButton("Find");
+
+        panel.add(findField);
+        panel.add(find); // Components Added using Flow Layout
+
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_F && e.isControlDown()){
+                    String selectionStr = textArea.getSelectedText();
+                    findField.setText(selectionStr);
+                }
+            }
+
+        });
+
+        find.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the text to find...convert it to lower case for eaiser comparision
+                String find = findField.getText().toLowerCase();
+                // Focus the text area, otherwise the highlighting won't show up
+                textArea.requestFocusInWindow();
+                // Make sure we have a valid search term
+                if (find != null && find.length() > 0) {
+                    Document document = textArea.getDocument();
+                    int findLength = find.length();
+                    try {
+                        boolean found = false;
+                        // Rest the search position if we're at the end of the document
+                        if (pos + findLength > document.getLength()) {
+                            pos = 0;
+                        }
+                        // While we haven't reached the end...
+                        // "<=" Correction
+                        while (pos + findLength <= document.getLength()) {
+                            // Extract the text from teh docuemnt
+                            String match = document.getText(pos, findLength).toLowerCase();
+                            // Check to see if it matches or request
+                            if (match.equals(find)) {
+                                found = true;
+                                break;
+                            }
+                            pos++;
+                        }
+
+                        // Did we find something...
+                        if (found) {
+                            // Get the rectangle of the where the text would be visible...
+                            Rectangle viewRect = textArea.modelToView(pos);
+                            // Scroll to make the rectangle visible
+                            textArea.scrollRectToVisible(viewRect);
+                            // Highlight the text
+                            textArea.setCaretPosition(pos + findLength);
+                            textArea.moveCaretPosition(pos);
+                            // Move the search position beyond the current match
+                            pos += findLength;
+                        }
+
+                    } catch (Exception exp) {
+                        exp.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+
+
 
         insertInteger.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
@@ -328,7 +407,8 @@ public class HTMLWindow  extends JFrame {
         menuBar.add(emptyItem1);
         menuBar.add(emptyItem2);
 
-        contentPane.add(new RTextScrollPane(textArea));
+        contentPane.add(BorderLayout.NORTH,panel);
+        contentPane.add(BorderLayout.CENTER,new RTextScrollPane(textArea));
 
         // A CompletionProvider is what knows of all possible completions, and
         // analyzes the contents of the text area at the caret position to
