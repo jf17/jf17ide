@@ -71,12 +71,14 @@ public class HTMLWindow  extends JFrame {
         JMenu changeMenu = new JMenu("HTML");
         changeMenu.setForeground(new Color(168, 168, 168));
 
-        JMenuItem insertCode = new JMenuItem("Вставить код");
-        changeMenu.add(insertCode);
-        JMenuItem insertImage = new JMenuItem("Вставить картинку");
-        changeMenu.add(insertImage);
-        JMenuItem insertParagraph = new JMenuItem("Параграф");
+        JMenuItem lineBreak = new JMenuItem("Перенос строки <br>");
+        changeMenu.add(lineBreak);
+        JMenuItem insertParagraph = new JMenuItem("Параграф <p>");
         changeMenu.add(insertParagraph);
+        JMenuItem insertCode = new JMenuItem("Вставить код <code>");
+        changeMenu.add(insertCode);
+        JMenuItem insertImage = new JMenuItem("Вставить картинку <img>");
+        changeMenu.add(insertImage);
         JMenuItem insertListLink = new JMenuItem("Link в списке");
         changeMenu.add(insertListLink);
         JMenuItem insertListString = new JMenuItem("String в списке");
@@ -202,6 +204,13 @@ public class HTMLWindow  extends JFrame {
         });
 
 
+        lineBreak.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                int position = textArea.getCaretPosition();
+                String str = "<br>";
+                textArea.insert(str , position);
+
+            }});
 
 
         insertInteger.addActionListener(new ActionListener()  {
