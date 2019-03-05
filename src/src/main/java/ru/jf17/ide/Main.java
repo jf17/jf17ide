@@ -34,6 +34,8 @@ public class Main extends JFrame{
         textArea.setForeground(new Color(248, 248, 242)); // цвет текста
         textArea.setCurrentLineHighlightColor(new Color(68 ,71 ,90)); //цвет активной линии
        // textArea.setFont(Font.decode("UTF8"));
+        Font font1 = new Font("FiraCode", Font.PLAIN, 11);
+        textArea.setFont(font1);
 
         textArea.setTransferHandler(new FileDropHandler());
 

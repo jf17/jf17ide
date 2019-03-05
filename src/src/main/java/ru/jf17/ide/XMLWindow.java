@@ -38,6 +38,8 @@ public class XMLWindow extends JFrame {
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
+        Font font1 = new Font("FiraCode", Font.PLAIN, 11);
+        textArea.setFont(font1);
 
         textArea.setBackground(new Color(0, 0, 0)); // цвет фона
         textArea.setForeground(new Color(168, 168, 168)); // цвет текста

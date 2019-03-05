@@ -37,6 +37,8 @@ public class HTMLWindow  extends JFrame {
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
         textArea.setCodeFoldingEnabled(true);
         // textArea.setFont(Font.decode("UTF8"));
+        Font font1 = new Font("FiraCode", Font.PLAIN, 11);
+        textArea.setFont(font1);
 
         textArea.setBackground(new Color(0,0,0)); // цвет фона
         textArea.setForeground(new Color(168, 168, 168)); // цвет текста
@@ -48,6 +50,7 @@ public class HTMLWindow  extends JFrame {
         syntScheme.setStyle(MARKUP_TAG_NAME,new Style(new Color(173,128,0)));
         syntScheme.setStyle(MARKUP_TAG_ATTRIBUTE_VALUE,new Style(new Color(83,22,136)));
         syntScheme.setStyle(MARKUP_TAG_DELIMITER,new Style(new Color(48,48,48)));
+
 
 
 
