@@ -8,4 +8,4 @@ https://github.com/bobbylight/AutoComplete
 
 ### FiraCode Style https://github.com/tonsky/FiraCode
 
-![Screenshot](/screenshot.png?raw=true)
+### ![Screenshot](/screenshot.png?raw=true)
