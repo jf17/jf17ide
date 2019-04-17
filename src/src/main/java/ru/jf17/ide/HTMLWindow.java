@@ -101,8 +101,12 @@ public class HTMLWindow  extends JFrame {
         codeMenu.add(insertInteger);
         JMenuItem insertObject = new JMenuItem("Обьект(переменая)");
         codeMenu.add(insertObject);
-        JMenuItem insertClass = new JMenuItem("Класс");
+        JMenuItem insertClass = new JMenuItem("class");
         codeMenu.add(insertClass);
+        JMenuItem interfaceClass = new JMenuItem("interface");
+        codeMenu.add(interfaceClass);
+        JMenuItem annotationClass = new JMenuItem("@Annotation");
+        codeMenu.add(annotationClass);
         JMenuItem insertMethod = new JMenuItem("Метод");
         codeMenu.add(insertMethod);
         JMenuItem insertString = new JMenuItem("Строка(текст)");
@@ -283,6 +287,20 @@ public class HTMLWindow  extends JFrame {
                 textArea.replaceSelection(str);
 
             }});
+        interfaceClass.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeinterface\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        annotationClass.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeannotation\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
         insertConstructor.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
@@ -317,7 +335,7 @@ public class HTMLWindow  extends JFrame {
         insertParagraph.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
-                String str = "<p>"+ selectionStr+"</p>";
+                String str = "<p>\n"+ selectionStr+"\n</p>";
                 textArea.replaceSelection(str);
 
             }});
