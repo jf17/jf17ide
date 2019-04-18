@@ -107,6 +107,10 @@ public class HTMLWindow  extends JFrame {
         codeMenu.add(interfaceClass);
         JMenuItem annotationClass = new JMenuItem("@Annotation");
         codeMenu.add(annotationClass);
+        JMenuItem enumClass = new JMenuItem("Enum");
+        codeMenu.add(enumClass);
+        JMenuItem constClass = new JMenuItem("константа");
+        codeMenu.add(constClass);
         JMenuItem insertMethod = new JMenuItem("Метод");
         codeMenu.add(insertMethod);
         JMenuItem insertString = new JMenuItem("Строка(текст)");
@@ -298,6 +302,20 @@ public class HTMLWindow  extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String selectionStr = textArea.getSelectedText();
                 String str = "<span class=\"codeannotation\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        enumClass.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeenum\">"+ selectionStr+"</span>";
+                textArea.replaceSelection(str);
+
+            }});
+        constClass.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                String selectionStr = textArea.getSelectedText();
+                String str = "<span class=\"codeconst\">"+ selectionStr+"</span>";
                 textArea.replaceSelection(str);
 
             }});
