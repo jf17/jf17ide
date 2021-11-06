@@ -38,15 +38,23 @@ final class FileDropHandler extends TransferHandler {
 
             String ext2 = FilenameUtils.getExtension(file.getAbsolutePath()).toUpperCase();
 
-            if(ext2.equals("JAVA")){ new JavaWindow(file);}
-            else if(ext2.equals("HTML")){new HTMLWindow(file);}
-            else if(ext2.equals("CPP")){new CppWindow(file);}
-            else if(ext2.equals("HPP")){new CppWindow(file);}
-            else if(ext2.equals("TXT")){new TXTWindow(file);}
-            else if(ext2.equals("PIXI")){new PIXIWindow(file);}
-            else if(ext2.equals("GO")){new GoWindow(file);}
-            else if(ext2.equals("XML")){new XMLWindow(file);}
-            else if(ext2.equals("FTL")){new FreeMarkerWindow(file);}
+            if (ext2.equals("JAVA")) {
+                new JavaWindow(file);
+            } else if (ext2.equals("HTML")) {
+                new HTMLWindow(file);
+            } else if (ext2.equals("CPP")) {
+                new CppWindow(file);
+            } else if (ext2.equals("HPP")) {
+                new CppWindow(file);
+            } else if (ext2.equals("GO")) {
+                new GoWindow(file);
+            } else if (ext2.equals("XML")) {
+                new XMLWindow(file);
+            } else if (ext2.equals("FTL")) {
+                new FreeMarkerWindow(file);
+            } else {
+                new TXTWindow(file);
+            }
         }
         return true;
     }
