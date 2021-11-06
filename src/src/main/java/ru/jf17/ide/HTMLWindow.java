@@ -158,6 +158,20 @@ public class HTMLWindow  extends JFrame {
                 if(e.getKeyCode() == KeyEvent.VK_F && e.isControlDown()){
                     String selectionStr = textArea.getSelectedText();
                     findField.setText(selectionStr);
+                }else if(e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()){
+                    if(isOpen) {
+                        try {
+                            Writer writerr = new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8");
+                            textArea.write(writerr);
+                            writerr.close();
+                            //  textArea.write(new FileWriter(pathOpenFile));
+                            JOptionPane.showMessageDialog(null, "File saved !");
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "File is NOT open!");
+                    }
                 }
             }
 
@@ -405,15 +419,12 @@ public class HTMLWindow  extends JFrame {
 
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 if(isOpen) {
                     try {
-
                         Writer writerr = new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8");
                         textArea.write(writerr);
                         writerr.close();
                       //  textArea.write(new FileWriter(pathOpenFile));
-
                         JOptionPane.showMessageDialog(null, "File saved !");
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -421,9 +432,6 @@ public class HTMLWindow  extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "File is NOT open!");
                 }
-
-
-
             }});
 
         workFolder=file.getParent();

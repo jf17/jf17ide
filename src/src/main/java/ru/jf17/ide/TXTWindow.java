@@ -9,10 +9,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
 
 import static org.fife.ui.rsyntaxtextarea.TokenTypes.MARKUP_TAG_ATTRIBUTE_VALUE;
@@ -139,6 +136,28 @@ public class TXTWindow extends JFrame {
 
 
             }});
+
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
+                    if (isOpen) {
+                        try {
+                            Writer writerr = new OutputStreamWriter(new FileOutputStream(pathOpenFile), "UTF-8");
+                            textArea.write(writerr);
+                            writerr.close();
+                            //  textArea.write(new FileWriter(pathOpenFile));
+                            JOptionPane.showMessageDialog(null, "File saved !");
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "File is NOT open!");
+                    }
+                }
+            }
+
+        });
 
 
 
