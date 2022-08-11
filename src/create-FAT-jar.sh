@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-jar cvmf Manifest.txt MyIDE.jar -C ./classes ru
+jar cvmf target/Manifest.txt target/MyIDE.jar -C ./classes ru
